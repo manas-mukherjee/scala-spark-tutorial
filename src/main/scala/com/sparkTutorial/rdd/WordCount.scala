@@ -10,6 +10,7 @@ object WordCount {
   def main(args: Array[String]) {
 
     Logger.getLogger("org").setLevel(Level.ERROR)
+    //using 3 core
     val conf = new SparkConf().setAppName("wordCounts").setMaster("local[3]")
     val sc = new SparkContext(conf)
 
