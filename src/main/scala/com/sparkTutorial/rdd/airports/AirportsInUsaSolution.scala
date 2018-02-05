@@ -7,6 +7,10 @@ object AirportsInUsaSolution {
 
   def main(args: Array[String]) {
 
+    /*LOCAL model : 2 worker threads on 2 cores (CPU)
+    local[*] all available core
+    local : only one thread( 1 core )
+    */
     val conf = new SparkConf().setAppName("airports").setMaster("local[2]")
     val sc = new SparkContext(conf)
 
