@@ -13,14 +13,14 @@ object AverageHousePriceSolution {
     val lines = sc.textFile("in/RealEstate.csv")
     val cleanedLines = lines.filter(line => !line.contains("Bedrooms"))
 
-    val housePricePairRdd = cleanedLines.map(line => (line.split(",")(3), (1, line.split(",")(2).toDouble)))
+    val housePricePairRdd = cleanedLines.map(line => (line.split(",")(3), AvgCount(1, line.split(",")(2).toDouble)))
 
-    val housePriceTotal = housePricePairRdd.reduceByKey((x, y) => (x._1 + y._1, x._2 + y._2))
+    val housePriceTotal = housePricePairRdd.reduceByKey((x, y) => AvgCount(x.count + y.count, x.total + y.total))
 
     println("housePriceTotal: ")
     for ((bedroom, total) <- housePriceTotal.collect()) println(bedroom + " : " + total)
 
-    val housePriceAvg = housePriceTotal.mapValues(avgCount => avgCount._2 / avgCount._1)
+    val housePriceAvg = housePriceTotal.mapValues(avgCount => avgCount.total / avgCount.count)
     println("housePriceAvg: ")
     for ((bedroom, avg) <- housePriceAvg.collect()) println(bedroom + " : " + avg)
   }

@@ -11,10 +11,13 @@ object CollectExample {
     val sc = new SparkContext(conf)
 
     val inputWords = List("spark", "hadoop", "spark", "hive", "pig", "cassandra", "hadoop")
+    //Convert string of words to a string rdd
     val wordRdd = sc.parallelize(inputWords)
 
+    //String RDD to list of strings
     val words = wordRdd.collect()
 
+    //Print list of strings
     for (word <- words) println(word)
   }
 }

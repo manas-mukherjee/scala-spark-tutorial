@@ -15,6 +15,11 @@ object WordCount {
     val sc = new SparkContext(conf)
 
     val lines = sc.textFile("in/word_count.text")
+
+    /*
+      U and T are string type.
+      def flatMap[U: ClassTagl(f: => TraversableOnce[U]): RDD[U]
+    */
     val words = lines.flatMap(line => line.split(" "))
 
     val wordCounts = words.countByValue()

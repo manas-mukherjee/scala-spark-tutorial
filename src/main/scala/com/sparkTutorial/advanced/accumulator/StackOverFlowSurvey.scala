@@ -13,18 +13,19 @@ object StackOverFlowSurvey {
 
     val total = sparkContext.longAccumulator
     val missingSalaryMidPoint = sparkContext.longAccumulator
+    val bytesProcessed = sparkContext.longAccumulator
 
     val responseRDD = sparkContext.textFile("in/2016-stack-overflow-survey-responses.csv")
 
     val responseFromCanada = responseRDD.filter(response => {
-      val splits = response.split(Utils.COMMA_DELIMITER, -1)
+      val abc = response.split(Utils.COMMA_DELIMITER, -1)
       total.add(1)
 
-      if (splits(14).isEmpty) {
+      if (abc(14).isEmpty) {
         missingSalaryMidPoint.add(1)
       }
 
-      splits(2) == "Canada"
+      abc(2) == "Canada"
     })
 
     println("Count of responses from Canada: " + responseFromCanada.count())
